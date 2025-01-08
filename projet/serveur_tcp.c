@@ -64,7 +64,7 @@ void *handle_client(void *socket_desc) {
 
     while ((read_size = recv(sock, buffer, BUFFER_SIZE, 0)) > 0) {
         buffer[read_size] = '\0';
-        printf("Requête reçue : %s\n", buffer);
+        printf("Request received : %s\n", buffer);
 
         char command[10], password[50];
         int id_compte;
@@ -132,7 +132,7 @@ int main() {
 #ifdef _WIN32
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-        printf("Échec de l'initialisation de Winsock.\n");
+        printf("Winsock initialization failed.\n");
         return 1;
     }
 #endif
