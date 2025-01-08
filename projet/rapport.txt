@@ -1,0 +1,100 @@
+# Rapport - Gestion de comptes bancaires (Client-Serveur en C)
+
+## Introduction
+Ce document présente le projet de gestion de comptes bancaires basé sur une architecture client-serveur. Le projet est réalisé en langage C en utilisant des sockets TCP pour la communication entre le client et le serveur. L'objectif est d'implémenter une application capable de gérer les opérations bancaires telles que l'ajout, le retrait, la consultation de solde et l'historique des opérations.
+
+---
+
+## Description du Code
+
+### Structure générale
+Le projet est composé de deux fichiers principaux :
+1. **`serveur.c`** : Contient toute la logique serveur, incluant la gestion des comptes et le traitement des commandes des clients.
+2. **`client.c`** : Implémente une interface utilisateur permettant d'envoyer des commandes au serveur.
+
+### Détails du code
+#### **1. serveur.c**
+- **Initialisation des comptes** :
+  La fonction `init_comptes()` initialise deux comptes bancaires avec des identifiants, mots de passe et soldes par défaut. Cela permet de tester les fonctionnalités sans configurer manuellement les comptes.
+
+- **Gestion des clients** :
+  La fonction `handle_client()` utilise un modèle multi-thread pour gérer plusieurs clients simultanément. Chaque client peut envoyer des commandes et recevoir une réponse adaptée.
+
+- **Traitement des commandes** :
+  - **AJOUT** : Ajoute une somme au compte du client si l'identification est correcte.
+  - **RETRAIT** : Retire une somme si le solde est suffisant.
+  - **SOLDE** : Renvoie le solde actuel du compte.
+  - **OPERATIONS** : Retourne les 10 dernières opérations du compte.
+
+#### **2. client.c**
+- **Connexion au serveur** :
+  Le client se connecte à l'adresse IP du serveur (par défaut `127.0.0.1`) et au port 8080.
+
+- **Envoi de commandes** :
+  L'utilisateur entre des commandes dans le terminal, qui sont transmises au serveur via une socket TCP.
+
+- **Réception des réponses** :
+  Les réponses du serveur sont affichées directement dans le terminal.
+
+---
+
+## Résultats des Tests
+
+### Tests effectués
+1. **Démarrage du serveur et connexion des clients** :
+   - Le serveur a été démarré avec succès en écoutant sur le port 8080.
+   - Plusieurs clients ont été connectés simultanément sans problème.
+
+2. **Commandes exécutées :**
+   - **Commande AJOUT** :
+     Entrée : `AJOUT 1 pass123 500.0`
+     Résultat attendu : `OK`
+     Résultat observé : `OK`
+
+   - **Commande RETRAIT** :
+     Entrée : `RETRAIT 1 pass123 200.0`
+     Résultat attendu : `OK`
+     Résultat observé : `OK`
+
+   - **Commande SOLDE** :
+     Entrée : `SOLDE 1 pass123`
+     Résultat attendu : `RES_SOLDE 1300.0`
+     Résultat observé : `RES_SOLDE 1300.0`
+
+   - **Commande OPERATIONS** :
+     Entrée : `OPERATIONS 1 pass123`
+     Résultat attendu : Les 10 dernières opérations.
+     Résultat observé : Les 10 dernières opérations sont affichées correctement.
+
+### Captures d'écran
+1. **Serveur démarré et en attente de connexions :**
+   *(Ajouter une capture d'écran montrant le serveur en écoute)*
+
+2. **Client connecté et exécutant des commandes :**
+   *(Ajouter une capture d'écran montrant un client envoyant des commandes et recevant des réponses)*
+
+3. **Multi-clients connectés simultanément :**
+   *(Ajouter une capture d'écran montrant plusieurs clients interagissant avec le serveur)*
+
+---
+
+## Conclusion
+Le projet fonctionne conformément aux spécifications. Les tests effectués confirment que :
+1. Le serveur gère correctement plusieurs connexions simultanées.
+2. Les commandes sont traitées efficacement et renvoient les résultats attendus.
+3. La communication entre le client et le serveur est stable.
+
+### Améliorations possibles
+1. Ajouter une gestion des erreurs plus détaillée côté serveur.
+2. Implémenter une authentification plus robuste pour les clients.
+3. Étendre le projet pour inclure une interface graphique pour le client.
+
+---
+
+## Annexes
+1. **Identifiants par défaut :**
+   - Compte 1 : ID = 1, Mot de passe = pass123
+   - Compte 2 : ID = 2, Mot de passe = pass456
+
+2. **Instructions pour exécuter le projet :**
+   - Voir le fichier README joint.
